@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js'
+import {cart,deleteCartProduct} from '../data/cart.js'
 import {products} from '../data/products.js'
 import {mony} from './utills/money.js';
 let cartSummaryHTML='';
@@ -98,7 +98,8 @@ document.querySelector('.js-order-summary').innerHTML=cartSummaryHTML;
 document.querySelectorAll('.jsdelete').forEach((link) =>{
     link.addEventListener('click' ,()=>{
         const kk=link.dataset.productId
-        console.log(kk)
+        deleteCartProduct(kk);
+        console.log(cart)
     })
 
 })
