@@ -38,7 +38,7 @@ cartSummaryHTML +=`
         <span class="update-quantity-link link-primary">
             Update
         </span>
-        <span class="delete-quantity-link link-primary">
+        <span class="delete-quantity-link link-primary jsdelete" data-product-Id="${match.id}">
             Delete
         </span>
         </div>
@@ -94,3 +94,11 @@ cartSummaryHTML +=`
 });
 
 document.querySelector('.js-order-summary').innerHTML=cartSummaryHTML;
+
+document.querySelectorAll('.jsdelete').forEach((link) =>{
+    link.addEventListener('click' ,()=>{
+        const kk=link.dataset.productId
+        console.log(kk)
+    })
+
+})
