@@ -1,3 +1,4 @@
+
 import {cart,addToCart,updateCartQuantity} from "../data/cart.js"
 import {products} from "../data/products.js"
 import {mony} from './utills/money.js';
@@ -58,7 +59,7 @@ products.forEach((product) => {
 }); 
 
 
-
+updateCartQuantity();
 
 
 document.querySelector('.grid-js').innerHTML = productsHTML;
