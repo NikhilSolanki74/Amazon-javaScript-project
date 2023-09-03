@@ -3,6 +3,8 @@ import {products} from '../data/products.js'
 import {mony} from './utills/money.js';
 let cartSummaryHTML='';
 
+
+newPrice();
 cart.forEach((cartItem)=>{
 
 const prodId= cartItem.productId;
@@ -102,7 +104,73 @@ document.querySelectorAll('.jsdelete').forEach((link) =>{
         
         const container=document.querySelector(`.js-delete-item-${kk}`);
         container.remove();
+        newPrice();
         // console.log(cart)
     })
 
 })
+
+
+
+export function newPrice(){
+    var pobj={
+        totalItems: 0 ,
+        totalPrice:0,
+        shiping:0 ,
+        beforeTax:0 ,
+        tax:0 ,
+        orderTotal:0
+    }
+cart.forEach((item)=>{
+    pobj.totalItems+=item.quantity;
+    pobj.shiping+=200
+ 
+    products.forEach((prd)=>{
+        if(prd.id===item.productId){
+              pobj.totalPrice+=prd.priceCents * item.quantity;
+
+        }
+    })
+
+
+})
+pobj.beforeTax=pobj.shiping+pobj.totalPrice;
+pobj.tax=pobj.beforeTax*(10/100);
+pobj.orderTotal=pobj.beforeTax + pobj.tax;
+
+
+
+document.querySelector('.payhtml').innerHTML=`<div class="payment-summary-title">
+Order Summary
+</div>
+
+<div class="payment-summary-row">
+<div>Items (${pobj.totalItems}) :</div>
+<div class="payment-summary-money">$${mony(pobj.totalPrice)}</div>
+</div>
+
+<div class="payment-summary-row">
+<div>Shipping &amp; handling:</div>
+<div class="payment-summary-money">$${mony(pobj.shiping)}</div>
+</div>
+
+<div class="payment-summary-row subtotal-row">
+<div>Total before tax:</div>
+<div class="payment-summary-money">$${mony(pobj.beforeTax)}</div>
+</div>
+
+<div class="payment-summary-row">
+<div>Estimated tax (10%):</div>
+<div class="payment-summary-money">$${mony(pobj.tax)}</div>
+</div>
+
+<div class="payment-summary-row total-row">
+<div>Order total:</div>
+<div class="payment-summary-money">$${mony(pobj.orderTotal)}</div>
+</div>
+
+<button class="place-order-button button-primary">
+Place your order
+</button>`
+
+}
